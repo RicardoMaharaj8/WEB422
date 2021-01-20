@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="post-single">
+    <div class="post-thumbnail">
+      <img alt="..." class="img-fluid" src="{{ post.featuredImage }}"/>
+    </div>
+    <div class="post-details">
+      <div class="post-meta d-flex justify-content-between">
+        <div class="category">
+          <a routerLink> {{ post.category }} </a>
+          <a routerLink> {{ post.category }} </a>
+        </div>
+      </div>
+      <h1>
+        {{ post.title }}
+        <a routerLink>
+          <i class="fa fa-bookmark-o"></i>
+        </a>
+      </h1>
+      <div
+        class="post-footer d-flex align-items-center flex-column flex-sm-row"
+      >
+        <a class="author d-flex align-items-center flex-wrap" routerLink>
+          <div class="avatar">
+            <img alt="..." class="img-fluid" src="/assets/img/user.svg"/>
+          </div>
+          <div class="title">
+            <span> {{ post.postedBy }} </span>
+          </div>
+        </a>
+        <div class="d-flex align-items-center flex-wrap">
+          <div class="date">
+            <i class="icon-clock"></i> {{ post.postDate | date: "mediumDate" }}
+          </div>
+          <div class="views"><i class="icon-eye"></i> {{ post.views }}</div>
+          <div class="comments meta-last">
+            <i class="icon-comment"></i> {{ post.comments.length }}
+          </div>
+        </div>
+      </div>
+      <div [innerHTML]="post.post" class="post-body"></div>
+      <div class="post-tags">
+        <a
+          *ngFor="let t of post.tags"
+          [queryParams]="{ tag: t.substr(1) }"
+          [routerLink]="['/blog']"
+          class="tag"
+        >
+          {{ t }}
+        </a>
+      </div>
+      <div class="post-comments">
+        <header>
+          <h3 class="h6">
+            Post Comments<span class="no-of-comments">
+              {{ post.comments.length }}
+            </span>
+          </h3>
+        </header>
+        <div *ngFor="let comments of post.comments" class="comment">
+          <div class="comment-header d-flex justify-content-between">
+            <div class="user d-flex align-items-center">
+              <div class="image">
+                <img
+                  alt="..."
+                  class="img-fluid rounded-circle"
+                  src="/assets/img/user.svg"
+                />
+              </div>
+              <div class="title">
+                <strong> {{ comments.author }} </strong
+                ><span class="date">
+                  {{ comments.date | date: "mediumDate" }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div [innerHTML]="comments.comment" class="comment-body"></div>
+        </div>
+      </div>
+      <div class="add-comment">
+        <header>
+          <h3 class="h6">Leave a reply</h3>
+        </header>
+        <form (ngSubmit)="submitComment()" class="commenting-form">
+          <div class="row">
+            <div class="form-group col-md-12">
+              <input
+                [(ngModel)]="commentName"
+                class="form-control"
+                id="username"
+                name="username"
+                placeholder="Name"
+                type="text"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <textarea
+                [(ngModel)]="commentText"
+                class="form-control"
+                id="usercomment"
+                name="usercomment"
+                placeholder="Type your comment"
+              ></textarea>
+            </div>
+            <div class="form-group col-md-12">
+              <button class="btn btn-secondary" type="submit">
+                Submit Comment
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
